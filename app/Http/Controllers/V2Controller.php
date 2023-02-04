@@ -41,13 +41,19 @@ class V2Controller extends Controller
         }
 
         $list = $results->map(function($item){
-            $artist = array_map(function($artistArray){
-                return $artistArray['name'];
+            if($item){
+                $artist = array_map(function($artistArray){
+                    return $artistArray['name'];
 
-            }, $item['artists']);
+                }, $item['artists']);
+                $name = $item['name'];
+            } else {
+                $artist = [''];
+                $name = '';
+            }
 
             return [
-               'name' => $item['name'],
+               'name' => $name,
                'artist' => $artist,
            ];
         });
