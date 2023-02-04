@@ -16,5 +16,8 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [\App\Http\Controllers\HomeController::class, 'home'])
     ->name('home');
 
-Route::post('/', [\App\Http\Controllers\HomeController::class, 'store'])
-    ->name('store');
+Route::get('/v1/', [\App\Http\Controllers\V1Controller::class, 'show'])
+    ->name('v1.show');
+
+Route::post('/v1', [\App\Http\Controllers\V1Controller::class, 'store'])
+    ->name('v1.store');
