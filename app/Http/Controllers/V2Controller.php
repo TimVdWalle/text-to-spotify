@@ -11,6 +11,8 @@ class V2Controller extends Controller
 {
     public function show()
     {
+
+
         return view('v2');
     }
 
@@ -31,45 +33,28 @@ class V2Controller extends Controller
             return redirect(route('home'));
         }
 
-        $spotify = new Spotify(config('spotify.default_config'));
-
         $results = collect();
+        $spotifyService = new SpotifyService();
         foreach ($parts as $part) {
-            $searchResults = $spotify
-                ->searchTracks($part)
-                ->limit(50)
-                ->offset(0)
-                ->get();
-
-            if (isset($searchResults['tracks']) && isset($searchResults['tracks']['items'])) {
-                foreach ($searchResults['tracks']['items'] as $searchResult) {
-
-                    if (strtolower($searchResult['name']) == strtolower($part)) {
-                        $artist = array_map(function($artistArray){
-                            return $artistArray['name'];
-
-                        }, $searchResult['artists']);
-
-                        $result = [
-                            'id' => $searchResult['id'],
-                            'name' => $searchResult['name'],
-                            'artist' => $artist,
-                        ];
-
-                        $results->push($result);
-                        break;
-                    } else {
-//                        dd($searchResult['name']);
-                    }
-                }
-            }
-
+            $result = $spotifyService->search($part);
+            $results->push($result);
         }
 
+        $list = $results->map(function($item){
+            $artist = array_map(function($artistArray){
+                return $artistArray['name'];
 
-        return view('v1', [
+            }, $item['artists']);
+
+            return [
+               'name' => $item['name'],
+               'artist' => $artist,
+           ];
+        });
+
+        return view('v2', [
             'text' => $text,
-            'results' => $results,
+            'results' => $list,
         ]);
 
     }

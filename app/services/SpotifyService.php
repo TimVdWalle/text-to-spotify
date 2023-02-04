@@ -27,40 +27,28 @@ class SpotifyService
             "DE",
         ];
 
-        $spotify = new Spotify(config('spotify.default_config'));
-
         for($try = 0; $try < $this->triesPerMarket; $try++){
             foreach($markets as $market){
+                $config = [
+                    'country' => null,
+                    'locale' => null,
+                    'market' => $market,
+                ];
+
+                $spotify = new Spotify($config);
                 $searchResults = $spotify
                     ->searchTracks($term)
                     ->limit($this->limitPerTry)
                     ->offset($this->limitPerTry * $try)
                     ->get();
 
-
-            }
-        }
-
-
-        if (isset($searchResults['tracks']) && isset($searchResults['tracks']['items'])) {
-            foreach ($searchResults['tracks']['items'] as $searchResult) {
-
-                if (strtolower($searchResult['name']) == strtolower($part)) {
-                    $artist = array_map(function($artistArray){
-                        return $artistArray['name'];
-
-                    }, $searchResult['artists']);
-
-                    $result = [
-                        'id' => $searchResult['id'],
-                        'name' => $searchResult['name'],
-                        'artist' => $artist,
-                    ];
-
-                    $results->push($result);
-                    break;
-                } else {
-//                        dd($searchResult['name']);
+                // check if the searchresults containt the term that was searched for ...
+                if (isset($searchResults['tracks']) && isset($searchResults['tracks']['items'])) {
+                    foreach ($searchResults['tracks']['items'] as $searchResult) {
+                        if (strtolower($searchResult['name']) == strtolower($term)) {
+                            return $searchResult;
+                        }
+                    }
                 }
             }
         }
