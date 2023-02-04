@@ -40,7 +40,7 @@
 
         @if(isset($results))
             <hr>
-            <div class="md:container md:mx-auto w-50 mt-10" style="width: 50%;">
+            <div class="md:container md:mx-auto fw-50 mt-10" fstyle="width: 70%;">
                 <div class="px-4 sm:px-6 lg:px-8">
                 <div class="mt-8 flex flex-col">
                     <div class="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
