@@ -27,3 +27,6 @@ Route::get('/v2/', [\App\Http\Controllers\V2Controller::class, 'show'])
 
 Route::post('/v2', [\App\Http\Controllers\V2Controller::class, 'store'])
     ->name('v2.store');
+
+Route::get('/v2/token/store', [\App\Http\Controllers\V2Controller::class, 'tokenstore'])
+    ->name('v2.token.store');
