@@ -21,3 +21,9 @@ Route::get('/v1/', [\App\Http\Controllers\V1Controller::class, 'show'])
 
 Route::post('/v1', [\App\Http\Controllers\V1Controller::class, 'store'])
     ->name('v1.store');
+
+Route::get('/v2/', [\App\Http\Controllers\V2Controller::class, 'show'])
+    ->name('v2.show');
+
+Route::post('/v2', [\App\Http\Controllers\V2Controller::class, 'store'])
+    ->name('v2.store');

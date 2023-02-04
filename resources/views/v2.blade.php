@@ -8,14 +8,14 @@
 </head>
 <body>
 <div class="bg-white">
-    <form action="/v1" method="post">
+    <form action="/" method="post">
         @csrf
 
         <div class="mx-auto max-w-7xl py-16 px-6 sm:py-24 lg:px-8">
             <div class="text-center">
                 <h2 class="text-lg flex-center justify-center">
-                    <span class="px-3 text-lg font-bold text-indigo-600">V0.1</span>
-                    <span class="px-3 text-lg  text-indigo-300"><a href="/v2">V0.2</a></span>
+                    <span class="px-3 text-lg  text-indigo-300"><a href="/v1">V0.1</a></span>
+                    <span class="px-3 text-lg font-bold text-indigo-600">V0.2</span>
 
                 </h2>
                 <p class="mt-1 text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl lg:text-6xl">Convert any text
