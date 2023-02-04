@@ -8,7 +8,7 @@
 </head>
 <body>
 <div class="bg-white">
-    <form action="/" method="post">
+    <form action="/v2" method="post">
         @csrf
 
         <div class="mx-auto max-w-7xl py-16 px-6 sm:py-24 lg:px-8">

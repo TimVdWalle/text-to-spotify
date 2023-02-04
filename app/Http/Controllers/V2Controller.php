@@ -2,11 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
-use Illuminate\Foundation\Bus\DispatchesJobs;
-use Illuminate\Foundation\Validation\ValidatesRequests;
+use App\Services\SpotifyService;
 use Illuminate\Http\Request;
-use Illuminate\Routing\Controller as BaseController;
 use Aerni\Spotify\Spotify;
 
 
@@ -75,5 +72,11 @@ class V2Controller extends Controller
             'results' => $results,
         ]);
 
+    }
+
+    public function tokenstore(Request $request){
+        if (isset($_GET['code'])) {
+            $request->session()->put('spotify-token', $request->code);
+        }
     }
 }
