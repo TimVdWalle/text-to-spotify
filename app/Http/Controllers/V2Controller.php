@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\SearchService;
 use App\Services\SpotifyService;
 use Illuminate\Http\Request;
 use Aerni\Spotify\Spotify;
@@ -11,8 +12,6 @@ class V2Controller extends Controller
 {
     public function show()
     {
-
-
         return view('v2');
     }
 
@@ -28,35 +27,39 @@ class V2Controller extends Controller
             return redirect(route('home'));
         }
 
-        $parts = explode(" ", $text);
-        if (count($parts) > 10) {
-            return redirect(route('home'));
-        }
+        $searchService = new SearchService();
+        $results = $searchService->splitAndSearch($text);
 
-        $results = collect();
-        $spotifyService = new SpotifyService();
-        foreach ($parts as $part) {
-            $result = $spotifyService->search($part);
-            $results->push($result);
-        }
 
-        $list = $results->map(function($item){
-            if($item){
-                $artist = array_map(function($artistArray){
-                    return $artistArray['name'];
-
-                }, $item['artists']);
-                $name = $item['name'];
-            } else {
-                $artist = [''];
-                $name = '';
-            }
-
-            return [
-               'name' => $name,
-               'artist' => $artist,
-           ];
-        });
+//        $parts = explode(" ", $text);
+//        if (count($parts) > 10) {
+//            return redirect(route('home'));
+//        }
+//
+//        $results = collect();
+//        $spotifyService = new SpotifyService();
+//        foreach ($parts as $part) {
+//            $result = $spotifyService->search($part);
+//            $results->push($result);
+//        }
+//
+//        $list = $results->map(function($item){
+//            if($item){
+//                $artist = array_map(function($artistArray){
+//                    return $artistArray['name'];
+//
+//                }, $item['artists']);
+//                $name = $item['name'];
+//            } else {
+//                $artist = [''];
+//                $name = '';
+//            }
+//
+//            return [
+//               'name' => $name,
+//               'artist' => $artist,
+//           ];
+//        });
 
         return view('v2', [
             'text' => $text,

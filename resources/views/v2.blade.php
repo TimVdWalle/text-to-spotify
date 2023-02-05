@@ -25,9 +25,10 @@
             </div>
 
             <div>
-                <div class="mt-10">
+                <div class="mt-10 flex justify-center flex-center">
                     <textarea rows="4" name="text" id="text"
-                              class="p-2 border-2 block w-full rounded-md border-zinc-200 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">{{$text ?? ''}}</textarea>
+                              rows="6"
+                              class="p-2 border-2 w-1/4 rounded-md border-zinc-200 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">{{$text ?? ''}}</textarea>
                 </div>
                 <div class="mt-5 flex justify-center ">
                     <button type="submit"
@@ -70,7 +71,7 @@
                                                         </div>
                                                         <div class="ml-4">
                                                             <div class="font-medium text-gray-900">{{$result['name']}}</div>
-                                                            <div class="text-gray-400">
+                                                            <div class="text-gray-300">
                                                                 {{implode(',', $result['artist'])}}
                                                             </div>
                                                         </div>
