@@ -14,6 +14,6 @@ class HomeController extends Controller
 {
     public function home()
     {
-        return redirect(route('v1.show'));
+        return redirect(route('v2.show'));
     }
 }
