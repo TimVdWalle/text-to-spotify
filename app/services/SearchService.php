@@ -20,8 +20,8 @@ class SearchService
     {
         $this->cachedResults = collect();
 
-//        $solutionCandidates = $this->split($text)->reverse();
-        $solutionCandidates = $this->split($text)->take(4);
+        $solutionCandidates = $this->split($text)->reverse();
+//        $solutionCandidates = $this->split($text)->take(5);
 //        dd($solutionCandidates);
 
         foreach ($solutionCandidates as $solutionCandidate) {
@@ -29,32 +29,46 @@ class SearchService
 
             $allValid = true;
             foreach ($parts as $part) {
-                if ($this->cachedResults->contains($part)) {
-                    // do not search again
+                if ($this->cachedResults->contains('id', $part)) {
+
+                    $cachedResult = $this->cachedResults->where('id', $part)->first();
+                    if($cachedResult && !$cachedResult['object']){
+//                        break;
+                        $allValid = false;
+                    }
                 } else {
                     $searchResult = $this->search($part);
 
                     if ($searchResult) {
-                        $this->cachedResults->push($searchResult);
+                        $this->cachedResults->push(
+                            ['id' => $part, 'object' => $searchResult],
+                        );
                     } else {
                         $allValid = false;
-                        break;
+                        $this->cachedResults->push(
+                            ['id' => $part, 'object' => null],
+                        );
+//                        break;
                     }
                 }
-
-//                $searchResult = $this->search($part);
-//
-//                echo('searching for ' . $part);
-//                echo('<hr>');
-//                dd($searchResult);
             }
 
-            if ($allValid) {
-                dd($this->cachedResults, $solutionCandidate);
+            if($allValid){
+                break;
+                dd($this->cachedResults);
             }
-
-
         }
+
+//        if(!$allValid){
+//            $allParts = explode(' ', $text);
+//            foreach($allParts as $part){
+//                if (!$this->cachedResults->contains('id', $part)) {
+//                    $searchResult = $this->search($part);
+//                }
+//            }
+//        }
+
+        dd($solutionCandidate, $this->cachedResults, $solutionCandidates);
 
 
 //        $list = $results->map(function($item){

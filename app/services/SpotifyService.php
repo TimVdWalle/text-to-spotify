@@ -14,17 +14,17 @@ use SpotifyWebAPI\SpotifyWebAPI;
  */
 class SpotifyService
 {
-    protected int $triesPerMarket = 5;
-    protected int $limitPerTry = 10;
+    protected int $triesPerMarket = 4;
+    protected int $limitPerTry = 50;
 
     public function search(string $term){
         $markets = [
             "BE",
             "US",
-            "NL",
-            "GB",
-            "FR",
-            "DE",
+//            "NL",
+//            "GB",
+//            "FR",
+//            "DE",
         ];
 
         for($try = 0; $try < $this->triesPerMarket; $try++){
