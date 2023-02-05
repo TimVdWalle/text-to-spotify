@@ -28,38 +28,7 @@ class V2Controller extends Controller
         }
 
         $searchService = new SearchService();
-        $results = $searchService->splitAndSearch($text);
-
-
-//        $parts = explode(" ", $text);
-//        if (count($parts) > 10) {
-//            return redirect(route('home'));
-//        }
-//
-//        $results = collect();
-//        $spotifyService = new SpotifyService();
-//        foreach ($parts as $part) {
-//            $result = $spotifyService->search($part);
-//            $results->push($result);
-//        }
-//
-//        $list = $results->map(function($item){
-//            if($item){
-//                $artist = array_map(function($artistArray){
-//                    return $artistArray['name'];
-//
-//                }, $item['artists']);
-//                $name = $item['name'];
-//            } else {
-//                $artist = [''];
-//                $name = '';
-//            }
-//
-//            return [
-//               'name' => $name,
-//               'artist' => $artist,
-//           ];
-//        });
+        $list = $searchService->splitAndSearch($text);
 
         return view('v2', [
             'text' => $text,
