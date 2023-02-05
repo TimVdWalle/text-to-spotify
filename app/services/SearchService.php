@@ -16,13 +16,18 @@ class SearchService
 {
     protected Collection $cachedResults;
 
+    // split into separate parts and try to find songs for each parts
+    // try to search for parts with more words per part first
+    // last try : every individual word as separate part
+    // if a result has been found before the last try: abort by breaking the loops
     public function splitAndSearch($text)
     {
+        // optimizing:
+        // keep track of what has been requested from the api, so we dont do unnecessary double lookups
         $this->cachedResults = collect();
 
+        // reverse the list so the groups with more words are at the beginning
         $solutionCandidates = $this->split($text)->reverse();
-//        $solutionCandidates = $this->split($text)->take(5);
-//        dd($solutionCandidates);
 
         foreach ($solutionCandidates as $solutionCandidate) {
             $parts = explode('/', $solutionCandidate);
@@ -54,8 +59,8 @@ class SearchService
             }
 
             if($allValid){
+                dd($solutionCandidate, $this->cachedResults, $solutionCandidates);
                 break;
-                dd($this->cachedResults);
             }
         }
 
@@ -113,9 +118,6 @@ class SearchService
 
         $results = collect();
 
-        if ($spaceCount < 3) {
-            $results->push($text);
-        }
 
         if ($spaceCount > 0) {
 //            $halve = floor($spaceCount / 2);
@@ -149,6 +151,10 @@ class SearchService
                     }
                 }
             }
+        }
+
+        if ($spaceCount < 3) {
+            $results->push($text);
         }
 
         return $results->unique();

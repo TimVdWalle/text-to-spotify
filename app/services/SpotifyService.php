@@ -17,6 +17,8 @@ class SpotifyService
     protected int $triesPerMarket = 4;
     protected int $limitPerTry = 50;
 
+    // search several markets until $term is found or until maximum tries have been reached
+    // return result or null (if not found)
     public function search(string $term){
         $markets = [
             "BE",
@@ -27,6 +29,8 @@ class SpotifyService
 //            "DE",
         ];
 
+        // try different markets because sometimes a song only exist on certain market, not in others
+        // limit the times we search with $triesPerMarket
         for($try = 0; $try < $this->triesPerMarket; $try++){
             foreach($markets as $market){
                 $config = [
