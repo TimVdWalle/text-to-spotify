@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Services\SearchService;
 use Illuminate\Http\Request;
 
 
@@ -25,7 +24,7 @@ class V2Controller extends Controller
             return redirect(route('home'));
         }
 
-        $searchService = new SearchService();
+        $searchService = new \App\Services\SearchService();
         $list = $searchService->splitAndSearch($text);
 
         return view('v2', [
