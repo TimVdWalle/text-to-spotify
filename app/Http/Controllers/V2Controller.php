@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use app\Services\SearchService;
+use App\Services\SearchService;
 use Illuminate\Http\Request;
 
 
