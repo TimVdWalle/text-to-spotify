@@ -37,7 +37,7 @@ class SearchService
                 if ($this->cachedResults->contains('id', $part)) {
 
                     $cachedResult = $this->cachedResults->where('id', $part)->first();
-                    if($cachedResult && !$cachedResult['object']){
+                    if ($cachedResult && !$cachedResult['object']) {
 //                        break;
                         $allValid = false;
                     }
@@ -58,57 +58,27 @@ class SearchService
                 }
             }
 
-            if($allValid){
-                dd($solutionCandidate, $this->cachedResults, $solutionCandidates);
+            if ($allValid) {
                 break;
             }
         }
 
-//        if(!$allValid){
-//            $allParts = explode(' ', $text);
-//            foreach($allParts as $part){
-//                if (!$this->cachedResults->contains('id', $part)) {
-//                    $searchResult = $this->search($part);
-//                }
-//            }
-//        }
-
-        dd($solutionCandidate, $this->cachedResults, $solutionCandidates);
-
-
-//        $list = $results->map(function($item){
-//            if($item){
-//                $artist = array_map(function($artistArray){
-//                    return $artistArray['name'];
-//
-//                }, $item['artists']);
-//                $name = $item['name'];
-//            } else {
-//                $artist = [''];
-//                $name = '';
-//            }
-//
-//            return [
-//                'name' => $name,
-//                'artist' => $artist,
-//            ];
-//        });
+        $list = $this->transformSolution($solutionCandidate);
+        return $list;
     }
 
     public function search(string $text)
     {
-        echo('searching for = ' . $text);
-        echo('<br />');
+//        echo('searching for = ' . $text);
+//        echo('<br />');
 
         $spotifyService = new SpotifyService();
         $result = $spotifyService->search($text);
 
         return $result;
-
-
     }
 
-    public function split(string $text)
+    private function split(string $text)
     {
         $spaceCount = substr_count($text, ' ');
 
@@ -177,5 +147,40 @@ class SearchService
         $arr[] = substr($string, $i + 1, $max);
 
         return $arr;
+    }
+
+    private function transformSolution($object)
+    {
+        $results = collect();
+
+        $parts = explode('/', $object);
+        foreach ($parts as $part) {
+            if ($this->cachedResults->contains('id', $part)) {
+                $cachedResult = $this->cachedResults->where('id', $part)->first();
+                $results->push($cachedResult);
+            }
+        }
+
+        $list = $results->map(function ($item) {
+
+
+            if (isset($item['object'])) {
+                $artist = array_map(function ($artistArray) {
+                    return $artistArray['name'];
+
+                }, $item['object']['artists']);
+                $name = $item['object']['name'];
+            } else {
+                $artist = [''];
+                $name = '';
+            }
+
+            return [
+                'name' => $name,
+                'artist' => $artist,
+            ];
+        });
+
+        return $list;
     }
 }
