@@ -2,10 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Services\SearchService;
-use App\Services\SpotifyService;
+use app\Services\SearchService;
 use Illuminate\Http\Request;
-use Aerni\Spotify\Spotify;
 
 
 class V2Controller extends Controller
