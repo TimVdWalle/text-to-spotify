@@ -16,25 +16,24 @@ class V2Controller extends Controller
     {
 
         $searchService = new SearchService();
-        $searchService->test();
 
-//        $text = $request->get('text');
-//
-//        if (!$text) {
-//            return redirect(route('home'));
-//        }
-//
-//        if (strlen($text) > 100) {
-//            return redirect(route('home'));
-//        }
-//
-//        $searchService = new \app\Services_OLD\SearchService();
-//        $list = $searchService->splitAndSearch($text);
-//
-//        return view('v2', [
-//            'text' => $text,
-//            'results' => $list,
-//        ]);
+        $text = $request->get('text');
+
+        if (!$text) {
+            return redirect(route('home'));
+        }
+
+        if (strlen($text) > 100) {
+            return redirect(route('home'));
+        }
+
+        $searchService = new SearchService();
+        $list = $searchService->splitAndSearch($text);
+
+        return view('v2', [
+            'text' => $text,
+            'results' => $list,
+        ]);
 
     }
 
