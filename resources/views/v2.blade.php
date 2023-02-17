@@ -7,17 +7,17 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
-<div class="bg-white">
+<div class="bg-white flex flex-col h-screen justify-between">
     <form action="/v2" method="post">
         @csrf
 
         <div class="mx-auto max-w-7xl py-16 px-6 sm:py-24 lg:px-8">
             <div class="text-center">
-                <h2 class="text-lg flex-center justify-center">
-                    <span class="px-3 text-lg  text-indigo-300"><a href="/v1">V0.1</a></span>
-                    <span class="px-3 text-lg font-bold text-indigo-600">V0.2</span>
+{{--                <h2 class="text-lg flex-center justify-center">--}}
+{{--                    <span class="px-3 text-lg  text-indigo-300"><a href="/v1">V0.1</a></span>--}}
+{{--                    <span class="px-3 text-lg font-bold text-indigo-600">V0.2</span>--}}
 
-                </h2>
+{{--                </h2>--}}
                 <p class="mt-1 text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl lg:text-6xl">Convert any text
                     to spotify playlist.</p>
                 <p class="mx-auto mt-5 max-w-xl text-xl text-gray-500">Type any text and convert it to a list of spotify
@@ -28,7 +28,7 @@
                 <div class="mt-10 flex justify-center flex-center">
                     <textarea rows="4" name="text" id="text"
                               rows="6"
-                              class="p-2 border-2 w-1/4 rounded-md border-zinc-200 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">{{$text ?? ''}}</textarea>
+                              class="p-2 border-2 w-1/2 rounded-md border-zinc-200 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">{{$text ?? ''}}</textarea>
                 </div>
                 <div class="mt-5 flex justify-center ">
                     <button type="submit"
