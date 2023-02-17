@@ -104,6 +104,11 @@
             </div>
         @endif
     </form>
+
+
+    @include('partials._footer')
+
+
 </div>
 </body>
 </html>
