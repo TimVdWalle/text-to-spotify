@@ -18,9 +18,9 @@
 {{--                    <span class="px-3 text-lg font-bold text-indigo-600">V0.2</span>--}}
 
 {{--                </h2>--}}
-                <p class="mt-1 text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl lg:text-6xl">Convert any text
+                <p class="mt-1 text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl">Convert any text
                     to spotify playlist.</p>
-                <p class="mx-auto mt-5 max-w-xl text-xl text-gray-500">Type any text and convert it to a list of spotify
+                <p class="mx-auto mt-5 max-w-xl text-xl ">Type any text and convert it to a list of spotify
                     tracks.</p>
             </div>
 
@@ -32,7 +32,7 @@
                 </div>
                 <div class="mt-5 flex justify-center ">
                     <button type="submit"
-                            class=" rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                            class=" rounded-md border border-transparent bg-green-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
                         Convert
                     </button>
                 </div>
