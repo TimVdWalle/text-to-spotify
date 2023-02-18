@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Track;
+use App\Services\TrackService;
 use Illuminate\Http\Request;
 
 
@@ -9,6 +11,10 @@ class V2Controller extends Controller
 {
     public function show()
     {
+
+        $trackService = new TrackService();
+        $trackService->test();
+
         return view('v2');
     }
 
