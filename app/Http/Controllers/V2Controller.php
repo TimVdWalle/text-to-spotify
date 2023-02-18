@@ -4,11 +4,19 @@ namespace App\Http\Controllers;
 
 use App\Services\SearchService;
 use App\Services\TrackService;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Redirector;
 
 class V2Controller extends Controller
 {
-    public function show()
+    /**
+     * @return Application|Factory|View
+     */
+    public function show(): View|Factory|Application
     {
         $trackService = new TrackService();
 //        $trackService->test();
@@ -16,7 +24,11 @@ class V2Controller extends Controller
         return view('v2');
     }
 
-    public function store(Request $request)
+    /**
+     * @param Request $request
+     * @return Application|Factory|View|RedirectResponse|Redirector
+     */
+    public function store(Request $request): View|Factory|Redirector|RedirectResponse|Application
     {
 //        $searchService = new SearchService();
 
@@ -26,7 +38,7 @@ class V2Controller extends Controller
             return redirect(route('home'));
         }
 
-        if (strlen($text) > 100) {
+        if (strlen(strval($text)) > 100) {
             return redirect(route('home'));
         }
 
@@ -39,7 +51,11 @@ class V2Controller extends Controller
         ]);
     }
 
-    public function tokenstore(Request $request)
+    /**
+     * @param Request $request
+     * @return void
+     */
+    public function tokenstore(Request $request): void
     {
         if (isset($_GET['code'])) {
             $request->session()->put('spotify-token', $request->code);

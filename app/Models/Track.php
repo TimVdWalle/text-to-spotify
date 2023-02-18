@@ -21,10 +21,16 @@ class Track extends Model
         'track',
     ];
 
+    /**
+     * @var string[]
+     */
     protected $casts = [
         'track' => 'object',
     ];
 
+    /**
+     * @return Attribute
+     */
     protected function track(): Attribute
     {
         return Attribute::make(

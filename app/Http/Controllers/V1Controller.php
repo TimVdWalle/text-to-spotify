@@ -7,11 +7,20 @@ use Illuminate\Http\Request;
 
 class V1Controller extends Controller
 {
+    /**
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
     public function show()
     {
         return view('v1');
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @throws \Aerni\Spotify\Exceptions\SpotifyApiException
+     * @throws \Aerni\Spotify\Exceptions\ValidatorException
+     */
     public function store(Request $request)
     {
         $text = $request->get('text');

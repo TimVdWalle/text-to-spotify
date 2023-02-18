@@ -19,6 +19,10 @@ class SearchService
     // try to search for parts with more words per part first
     // last try : every individual word as separate part
     // if a result has been found before the last try: abort by breaking the loops
+    /**
+     * @param $text
+     * @return Collection
+     */
     public function splitAndSearch($text)
     {
         // optimizing:
@@ -68,6 +72,10 @@ class SearchService
         return $list;
     }
 
+    /**
+     * @param string $text
+     * @return mixed|null
+     */
     public function search(string $text)
     {
 //        echo('searching for = ' . $text);
@@ -79,6 +87,10 @@ class SearchService
         return $result;
     }
 
+    /**
+     * @param string $text
+     * @return Collection
+     */
     private function split(string $text)
     {
         $spaceCount = substr_count($text, ' ');
@@ -131,6 +143,13 @@ class SearchService
     }
 
     // https://stackoverflow.com/questions/5956066/how-can-i-split-a-string-in-php-at-the-nth-occurrence-of-a-needle
+
+    /**
+     * @param $string
+     * @param $needle
+     * @param $nth
+     * @return array
+     */
     private function split2($string, $needle, $nth)
     {
         $max = strlen($string);
@@ -149,6 +168,10 @@ class SearchService
         return $arr;
     }
 
+    /**
+     * @param $object
+     * @return Collection
+     */
     private function transformSolution($object)
     {
         $results = collect();
