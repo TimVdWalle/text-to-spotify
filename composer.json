@@ -36,6 +36,13 @@
         }
     },
     "scripts": {
+        "analyse": [
+            "./vendor/bin/phpstan analyse"
+        ],
+        "analyse-json": [
+            "./vendor/bin/phpstan analyse --error-format=json"
+        ],
+
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
             "@php artisan package:discover --ansi"
