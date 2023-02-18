@@ -12,7 +12,7 @@ use Illuminate\Support\Collection;
 
 class SearchService
 {
-//    protected Collection $cachedResults;
+    protected Collection $cachedResults;
 
     // split into separate parts and try to find songs for each parts
     // try to search for parts with more words per part first
@@ -26,7 +26,7 @@ class SearchService
     {
         // optimizing:
         // keep track of what has been requested from the api, so we dont do unnecessary double lookups
-//        $this->cachedResults = collect();
+        $this->cachedResults = collect();
 
         // reverse the list so the groups with more words are at the beginning
         $solutionCandidates = $this->split($text)->reverse();
