@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Track;
+use App\Services\SearchService;
 use App\Services\TrackService;
 use Illuminate\Http\Request;
 
@@ -21,7 +21,7 @@ class V2Controller extends Controller
     public function store(Request $request)
     {
 
-        $searchService = new SearchService();
+//        $searchService = new SearchService();
 
         $text = $request->get('text');
 

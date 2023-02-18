@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Services;
 
 /*
  * this service uses 2 libraries to talk to the spotify api
@@ -9,6 +9,7 @@ namespace App\Http\Controllers;
  */
 
 
+use App\Http\Controllers\SpotifyService;
 use Illuminate\Support\Collection;
 
 class SearchService
@@ -61,6 +62,8 @@ class SearchService
                 break;
             }
         }
+
+//        dd($this->cachedResults);
 
         $list = $this->transformSolution($solutionCandidate);
         return $list;
