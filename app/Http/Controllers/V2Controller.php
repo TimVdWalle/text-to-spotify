@@ -13,7 +13,7 @@ class V2Controller extends Controller
     {
 
         $trackService = new TrackService();
-        $trackService->test();
+//        $trackService->test();
 
         return view('v2');
     }
