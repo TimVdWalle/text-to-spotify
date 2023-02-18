@@ -8,7 +8,6 @@ namespace App\Services;
  *      SpotifyWebAPI : can talk to spotify api with user tokens: used for creating playlists for user
  */
 
-use App\Http\Controllers\SpotifyService;
 use Illuminate\Support\Collection;
 
 class SearchService
