@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Services;
 
 use Aerni\Spotify\Spotify;
 use SpotifyWebAPI\Session;
