@@ -8,13 +8,12 @@ namespace App\Services;
  *      SpotifyWebAPI : can talk to spotify api with user tokens: used for creating playlists for user
  */
 
-
 use App\Http\Controllers\SpotifyService;
 use Illuminate\Support\Collection;
 
 class SearchService
 {
-    protected Collection $cachedResults;
+//    protected Collection $cachedResults;
 
     // split into separate parts and try to find songs for each parts
     // try to search for parts with more words per part first
@@ -24,7 +23,7 @@ class SearchService
     {
         // optimizing:
         // keep track of what has been requested from the api, so we dont do unnecessary double lookups
-        $this->cachedResults = collect();
+//        $this->cachedResults = collect();
 
         // reverse the list so the groups with more words are at the beginning
         $solutionCandidates = $this->split($text)->reverse();
@@ -35,9 +34,8 @@ class SearchService
             $allValid = true;
             foreach ($parts as $part) {
                 if ($this->cachedResults->contains('id', $part)) {
-
                     $cachedResult = $this->cachedResults->where('id', $part)->first();
-                    if ($cachedResult && !$cachedResult['object']) {
+                    if ($cachedResult && ! $cachedResult['object']) {
 //                        break;
                         $allValid = false;
                     }
@@ -66,6 +64,7 @@ class SearchService
 //        dd($this->cachedResults);
 
         $list = $this->transformSolution($solutionCandidate);
+
         return $list;
     }
 
@@ -89,7 +88,6 @@ class SearchService
         }
 
         $results = collect();
-
 
         if ($spaceCount > 0) {
 //            $halve = floor($spaceCount / 2);
@@ -118,7 +116,7 @@ class SearchService
 
                 foreach ($solutions1 as $solution1) {
                     foreach ($solutions2 as $solution2) {
-                        $solution = $solution1 . '/' . $solution2;
+                        $solution = $solution1.'/'.$solution2;
                         $results->push($solution);
                     }
                 }
@@ -164,12 +162,9 @@ class SearchService
         }
 
         $list = $results->map(function ($item) {
-
-
             if (isset($item['object'])) {
                 $artist = array_map(function ($artistArray) {
                     return $artistArray['name'];
-
                 }, $item['object']['artists']);
                 $name = $item['object']['name'];
             } else {

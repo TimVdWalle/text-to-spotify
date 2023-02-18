@@ -9,7 +9,6 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * @property string $track_name
  */
-
 class Track extends Model
 {
     use HasFactory;
@@ -19,11 +18,11 @@ class Track extends Model
      */
     protected $fillable = [
         'track_name',
-        'track'
+        'track',
     ];
 
     protected $casts = [
-        'track' => 'object'
+        'track' => 'object',
     ];
 
     protected function track(): Attribute

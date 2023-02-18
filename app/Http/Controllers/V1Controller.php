@@ -2,13 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
-use Illuminate\Foundation\Bus\DispatchesJobs;
-use Illuminate\Foundation\Validation\ValidatesRequests;
-use Illuminate\Http\Request;
-use Illuminate\Routing\Controller as BaseController;
 use Aerni\Spotify\Spotify;
-
+use Illuminate\Http\Request;
 
 class V1Controller extends Controller
 {
@@ -21,7 +16,7 @@ class V1Controller extends Controller
     {
         $text = $request->get('text');
 
-        if (!$text) {
+        if (! $text) {
             return redirect(route('home'));
         }
 
@@ -29,7 +24,7 @@ class V1Controller extends Controller
             return redirect(route('home'));
         }
 
-        $parts = explode(" ", $text);
+        $parts = explode(' ', $text);
         if (count($parts) > 10) {
             return redirect(route('home'));
         }
@@ -46,11 +41,9 @@ class V1Controller extends Controller
 
             if (isset($searchResults['tracks']) && isset($searchResults['tracks']['items'])) {
                 foreach ($searchResults['tracks']['items'] as $searchResult) {
-
                     if (strtolower($searchResult['name']) == strtolower($part)) {
-                        $artist = array_map(function($artistArray){
+                        $artist = array_map(function ($artistArray) {
                             return $artistArray['name'];
-
                         }, $searchResult['artists']);
 
                         $result = [
@@ -66,14 +59,11 @@ class V1Controller extends Controller
                     }
                 }
             }
-
         }
-
 
         return view('v1', [
             'text' => $text,
             'results' => $results,
         ]);
-
     }
 }

@@ -6,7 +6,6 @@ use Aerni\Spotify\Spotify;
 use SpotifyWebAPI\Session;
 use SpotifyWebAPI\SpotifyWebAPI;
 
-
 /*
  * this service uses 2 libraries to talk to the spotify api
  *      Aerni\Spotify\Spotify : can talk to the spotify api without user tokens: just used to search for tracks
@@ -15,24 +14,26 @@ use SpotifyWebAPI\SpotifyWebAPI;
 class SpotifyService
 {
     protected int $triesPerMarket = 4;
+
     protected int $limitPerTry = 50;
 
     // search several markets until $term is found or until maximum tries have been reached
     // return result or null (if not found)
-    public function search(string $term){
+    public function search(string $term)
+    {
         $markets = [
-            "BE",
-            "US",
-//            "NL",
-//            "GB",
-//            "FR",
-//            "DE",
+            'BE',
+            'US',
+            //            "NL",
+            //            "GB",
+            //            "FR",
+            //            "DE",
         ];
 
         // try different markets because sometimes a song only exist on certain market, not in others
         // limit the times we search with $triesPerMarket
-        for($try = 0; $try < $this->triesPerMarket; $try++){
-            foreach($markets as $market){
+        for ($try = 0; $try < $this->triesPerMarket; $try++) {
+            foreach ($markets as $market) {
                 $config = [
                     'country' => null,
                     'locale' => null,
@@ -58,7 +59,8 @@ class SpotifyService
         }
     }
 
-    public function test(){
+    public function test()
+    {
         $session = new Session(
             config('spotify.auth.client_id'),
             config('spotify.auth.client_secret'),
@@ -80,8 +82,8 @@ class SpotifyService
                 ],
             ];
 
-            header('Location: ' . $session->getAuthorizeUrl($options));
-            die();
+            header('Location: '.$session->getAuthorizeUrl($options));
+            exit();
         }
     }
 }

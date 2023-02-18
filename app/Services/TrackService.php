@@ -8,4 +8,10 @@ class TrackService
     {
         dd('test');
     }
+
+    public function contains()
+    {
+    }
+
+//    public function
 }
