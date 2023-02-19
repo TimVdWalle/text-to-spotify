@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * @property string $track_name
+ * @property object $track
  */
 class Track extends Model
 {
