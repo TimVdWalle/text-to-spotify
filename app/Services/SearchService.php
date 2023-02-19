@@ -8,14 +8,15 @@ namespace App\Services;
  *      SpotifyWebAPI : can talk to spotify api with user tokens: used for creating playlists for user
  */
 
+use App\Models\Track;
 use Illuminate\Support\Collection;
 
 class SearchService
 {
-    /**
-     * @var Collection<int, mixed>
-     */
-    protected Collection $cachedResults;
+//    /**
+//     * @var Collection<int, mixed>
+//     */
+//    protected Collection $cachedResults;
 
     // split into separate parts and try to find songs for each parts
     // try to search for parts with more words per part first
@@ -29,7 +30,7 @@ class SearchService
     {
         // optimizing:
         // keep track of what has been requested from the api, so we dont do unnecessary double lookups
-        $this->cachedResults = collect();
+//        $this->cachedResults = collect();
 
         // reverse the list so the groups with more words are at the beginning
         $solutionCandidates = $this->split($text)->reverse();
@@ -39,27 +40,45 @@ class SearchService
 
             $allValid = true;
             foreach ($parts as $part) {
-                if ($this->cachedResults->contains('id', $part)) {
-                    $cachedResult = $this->cachedResults->where('id', $part)->first();
-                    if ($cachedResult && ! $cachedResult['object']) {
+                $cachedResult = TrackService::get($part);
+
+                if ($cachedResult) {
+                    if (!TrackService::isValid($cachedResult)) {
 //                        break;
                         $allValid = false;
                     }
                 } else {
                     $searchResult = $this->search($part);
-
                     if ($searchResult) {
-                        $this->cachedResults->push(
-                            ['id' => $part, 'object' => $searchResult],
-                        );
+                        TrackService::store($part, (object)$searchResult);
                     } else {
+                        TrackService::store($part, (object)null);
                         $allValid = false;
-                        $this->cachedResults->push(
-                            ['id' => $part, 'object' => null],
-                        );
-//                        break;
                     }
                 }
+
+//                if ($this->cachedResults->contains('id', $part)) {
+//                    $cachedResult = $this->cachedResults->where('id', $part)->first();
+//                    if ($cachedResult && ! $cachedResult['object']) {
+                ////                        break;
+//                        $allValid = false;
+//                    }
+//                }
+//                else {
+//                    $searchResult = $this->search($part);
+//
+//                    if ($searchResult) {
+//                        $this->cachedResults->push(
+//                            ['id' => $part, 'object' => $searchResult],
+//                        );
+//                    } else {
+//                        $allValid = false;
+//                        $this->cachedResults->push(
+//                            ['id' => $part, 'object' => null],
+//                        );
+                ////                        break;
+//                    }
+//                }
             }
 
             if ($allValid) {
@@ -67,7 +86,7 @@ class SearchService
             }
         }
 
-        if (! isset($solutionCandidate)) {
+        if (!isset($solutionCandidate)) {
             return collect();
         }
 
@@ -77,7 +96,7 @@ class SearchService
     }
 
     /**
-     * @param  string  $text
+     * @param string $text
      * @return mixed|null
      */
     public function search(string $text)
@@ -92,7 +111,7 @@ class SearchService
     }
 
     /**
-     * @param  string  $text
+     * @param string $text
      * @return Collection<int, string>
      */
     private function split(string $text)
@@ -132,14 +151,14 @@ class SearchService
 
             foreach ($solutions1 as $solution1) {
                 foreach ($solutions2 as $solution2) {
-                    $solution = $solution1.'/'.$solution2;
+                    $solution = $solution1 . '/' . $solution2;
                     $results->push($solution);
                 }
             }
         }
 //        }
 
-        if ($spaceCount < 3) {
+        if ($spaceCount < 4) {
             $results->push($text);
         }
 
@@ -182,22 +201,45 @@ class SearchService
 
         $parts = explode('/', $object);
         foreach ($parts as $part) {
-            if ($this->cachedResults->contains('id', $part)) {
-                $cachedResult = $this->cachedResults->where('id', $part)->first();
-                $results->push($cachedResult);
+            $track = TrackService::get($part);
+            if ($track) {
+                $results->push($track);
             }
+
+
+//            if ($this->cachedResults->contains('id', $part)) {
+//                $cachedResult = $this->cachedResults->where('id', $part)->first();
+//                $results->push($cachedResult);
+//            }
         }
 
+//        dd($results);
+
         $list = $results->map(function ($item) {
-            if (isset($item['object'])) {
+//            dd();
+
+
+            /** @var Track $item */
+            if ($item->track && isset($item->track['artists'])){        /* @phpstan-ignore-line */
+                $name = $item->track_name;
                 $artist = array_map(function ($artistArray) {
                     return $artistArray['name'];
-                }, $item['object']['artists']);
-                $name = $item['object']['name'];
+                }, $item->track['artists']);
             } else {
                 $artist = [''];
                 $name = '';
             }
+
+
+//            if (isset($item['object'])) {
+//                $artist = array_map(function ($artistArray) {
+//                    return $artistArray['name'];
+//                }, $item['object']['artists']);
+//                $name = $item['object']['name'];
+//            } else {
+//                $artist = [''];
+//                $name = '';
+//            }
 
             return [
                 'name' => strval($name),
