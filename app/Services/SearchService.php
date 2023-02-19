@@ -12,6 +12,9 @@ use Illuminate\Support\Collection;
 
 class SearchService
 {
+    /**
+     * @var Collection<int, mixed>
+     */
     protected Collection $cachedResults;
 
     // split into separate parts and try to find songs for each parts
@@ -20,9 +23,9 @@ class SearchService
     // if a result has been found before the last try: abort by breaking the loops
     /**
      * @param $text
-     * @return Collection
+     * @return Collection<int, mixed>
      */
-    public function splitAndSearch($text)
+    public function splitAndSearch(string $text)
     {
         // optimizing:
         // keep track of what has been requested from the api, so we dont do unnecessary double lookups
@@ -32,7 +35,7 @@ class SearchService
         $solutionCandidates = $this->split($text)->reverse();
 
         foreach ($solutionCandidates as $solutionCandidate) {
-            $parts = explode('/', $solutionCandidate);
+            $parts = explode('/', strval($solutionCandidate));
 
             $allValid = true;
             foreach ($parts as $part) {
@@ -66,7 +69,7 @@ class SearchService
 
 //        dd($this->cachedResults);
 
-        $list = $this->transformSolution($solutionCandidate);
+        $list = isset($solutionCandidate) ? $this->transformSolution($solutionCandidate) : collect([]);
 
         return $list;
     }
@@ -88,7 +91,7 @@ class SearchService
 
     /**
      * @param string $text
-     * @return Collection
+     * @return Collection<0, string>
      */
     private function split(string $text)
     {

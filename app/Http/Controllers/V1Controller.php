@@ -23,9 +23,9 @@ class V1Controller extends Controller
      */
     public function store(Request $request)
     {
-        $text = $request->get('text');
+        $text = strval($request->get('text'));
 
-        if (! $text) {
+        if (!$text) {
             return redirect(route('home'));
         }
 
@@ -38,7 +38,7 @@ class V1Controller extends Controller
             return redirect(route('home'));
         }
 
-        $spotify = new Spotify(config('spotify.default_config'));
+        $spotify = new Spotify((array)config('spotify.default_config'));
 
         $results = collect();
         foreach ($parts as $part) {

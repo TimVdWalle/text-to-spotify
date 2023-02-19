@@ -13,12 +13,24 @@ use SpotifyWebAPI\SpotifyWebAPI;
  */
 class SpotifyService
 {
+    /**
+     * @var int
+     */
     protected int $triesPerMarket = 4;
 
+    /**
+     * @var int
+     */
     protected int $limitPerTry = 50;
 
     // search several markets until $term is found or until maximum tries have been reached
     // return result or null (if not found)
+    /**
+     * @param string $term
+     * @return mixed|void
+     * @throws \Aerni\Spotify\Exceptions\SpotifyApiException
+     * @throws \Aerni\Spotify\Exceptions\ValidatorException
+     */
     public function search(string $term)
     {
         $markets = [
@@ -59,19 +71,22 @@ class SpotifyService
         }
     }
 
+    /**
+     * @return void
+     */
     public function test()
     {
         $session = new Session(
-            config('spotify.auth.client_id'),
-            config('spotify.auth.client_secret'),
-            config('spotify.auth.redirect_url'),
+            strval(config('spotify.auth.client_id')),
+            strval(config('spotify.auth.client_secret')),
+                strval(config('spotify.auth.redirect_url')),
         );
 
         $api = new SpotifyWebAPI();
         $token = session('spotify-token');
 
         if ($token) {
-            $session->requestAccessToken($token);
+            $session->requestAccessToken(strval($token));
             $api->setAccessToken($session->getAccessToken());
 
             print_r($api->me());

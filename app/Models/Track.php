@@ -22,20 +22,20 @@ class Track extends Model
     ];
 
     /**
-     * @var string[]
+     * @var array<string, string>
      */
     protected $casts = [
         'track' => 'object',
     ];
 
     /**
-     * @return Attribute
+     * @return Attribute<string, object>
      */
     protected function track(): Attribute
     {
         return Attribute::make(
-            get: fn ($value) => json_decode($value, true),
-            set: fn ($value) => json_encode($value),
+            get: fn($value) => json_decode(strval($value), true),
+            set: fn($value) => json_encode($value),
         );
     }
 }

@@ -32,7 +32,7 @@ class V2Controller extends Controller
     {
 //        $searchService = new SearchService();
 
-        $text = $request->get('text');
+        $text = strval($request->get('text'));
 
         if (! $text) {
             return redirect(route('home'));
