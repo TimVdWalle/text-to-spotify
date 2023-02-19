@@ -23,9 +23,9 @@ class SearchService
     // if a result has been found before the last try: abort by breaking the loops
     /**
      * @param $text
-     * @return Collection<int, array{name: string,artist: array}>
+     * @return Collection<int, array{name: string,artist: array<string>}>
      */
-    public function splitAndSearch(string $text)
+    public function splitAndSearch(string $text): Collection
     {
         // optimizing:
         // keep track of what has been requested from the api, so we dont do unnecessary double lookups
@@ -152,7 +152,7 @@ class SearchService
      * @param $string
      * @param $needle
      * @param $nth
-     * @return array
+     * @return array<string>
      */
     private function split2(string $string, string $needle, int $nth)
     {
@@ -174,7 +174,7 @@ class SearchService
 
     /**
      * @param $object
-     * @return Collection<int, array{name: string,artist: array}>
+     * @return Collection<int, array{name: string,artist: array<string>}>
      */
     private function transformSolution(string $object)
     {
@@ -205,6 +205,7 @@ class SearchService
             ];
         });
 
+        /* @phpstan-ignore-next-line */
         return $list;
     }
 }
