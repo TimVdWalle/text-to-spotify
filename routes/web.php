@@ -30,3 +30,15 @@ Route::post('/v2', [\App\Http\Controllers\V2Controller::class, 'store'])
 
 Route::get('/v2/token/store', [\App\Http\Controllers\V2Controller::class, 'tokenstore'])
     ->name('v2.token.store');
+
+Route::get('/v3/', [\App\Http\Controllers\V3Controller::class, 'show'])
+    ->name('v3.show');
+
+Route::post('/v3', [\App\Http\Controllers\V3Controller::class, 'store'])
+    ->name('v3.store');
+
+Route::get('/v3/token/store', [\App\Http\Controllers\V3Controller::class, 'tokenstore'])
+    ->name('v3.token.store');
+
+Route::get('/v3/playlist/store', [\App\Http\Controllers\V3Controller::class, 'playliststore'])
+    ->name('v3.playlist.store');
