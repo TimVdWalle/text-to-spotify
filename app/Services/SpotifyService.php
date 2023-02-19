@@ -75,13 +75,9 @@ class SpotifyService
     /**
      * @return void
      */
-    public function test()
+    public function checkToken()
     {
-        $session = new Session(
-            strval(config('spotify.auth.client_id')),
-            strval(config('spotify.auth.client_secret')),
-            strval(config('spotify.auth.redirect_url')),
-        );
+        $session = $this->getSession();
 
         $api = new SpotifyWebAPI();
         $token = session('spotify-token');
@@ -90,16 +86,37 @@ class SpotifyService
             $session->requestAccessToken(strval($token));
             $api->setAccessToken($session->getAccessToken());
 
-            print_r($api->me());
+//            print_r($api->me());
         } else {
-            $options = [
-                'scope' => [
-                    'user-read-email',
-                ],
-            ];
-
-            header('Location: '.$session->getAuthorizeUrl($options));
-            exit();
+            return null;
         }
+    }
+
+    /**
+     * @return void
+     */
+    public function redirectToGetToken(){
+        $options = [
+            'scope' => [
+                'user-read-email',
+            ],
+        ];
+
+        header('Location: '.$session->getAuthorizeUrl($options));
+        exit();
+
+    }
+
+    /**
+     * @return Session
+     */
+    private function getSession(){
+        $session = new Session(
+            strval(config('spotify.auth.client_id')),
+            strval(config('spotify.auth.client_secret')),
+            strval(config('spotify.auth.redirect_url')),
+        );
+
+        return $session;
     }
 }
