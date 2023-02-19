@@ -23,7 +23,7 @@ class SearchService
     // if a result has been found before the last try: abort by breaking the loops
     /**
      * @param $text
-     * @return Collection<int, mixed>
+     * @return Collection<int, array{name: string,artist: array}>
      */
     public function splitAndSearch(string $text)
     {
@@ -67,9 +67,11 @@ class SearchService
             }
         }
 
-//        dd($this->cachedResults);
+        if (! isset($solutionCandidate)) {
+            return collect();
+        }
 
-        $list = isset($solutionCandidate) ? $this->transformSolution($solutionCandidate) : collect([]);
+        $list = $this->transformSolution($solutionCandidate);
 
         return $list;
     }
@@ -91,19 +93,19 @@ class SearchService
 
     /**
      * @param  string  $text
-     * @return Collection<0, string>
+     * @return Collection<int, string>
      */
     private function split(string $text)
     {
         $spaceCount = substr_count($text, ' ');
 
         if ($spaceCount < 1) {
-            return collect($text);
+            return collect([$text]);
         }
 
         $results = collect();
 
-        if ($spaceCount > 0) {
+//        if ($spaceCount > 0) {
 //            $halve = floor($spaceCount / 2);
 //            $parts = $this->split2($text, ' ', $halve);
 //            $solutions1 = $this->split($parts[0]);
@@ -116,26 +118,26 @@ class SearchService
 //                }
 //            }
 
-            for ($cutOff = 1; $cutOff <= $spaceCount; $cutOff++) {
+        for ($cutOff = 1; $cutOff <= $spaceCount; $cutOff++) {
 //                echo($cutOff);
 //                echo(' : ');
-                $parts = $this->split2($text, ' ', $cutOff);
+            $parts = $this->split2($text, ' ', $cutOff);
 //                echo($parts[0]);
 //                echo(' //// ');
 //                echo($parts[1]);
 //                echo('<hr>');
 
-                $solutions1 = $this->split($parts[0]);
-                $solutions2 = $this->split($parts[1]);
+            $solutions1 = $this->split($parts[0]);
+            $solutions2 = $this->split($parts[1]);
 
-                foreach ($solutions1 as $solution1) {
-                    foreach ($solutions2 as $solution2) {
-                        $solution = $solution1.'/'.$solution2;
-                        $results->push($solution);
-                    }
+            foreach ($solutions1 as $solution1) {
+                foreach ($solutions2 as $solution2) {
+                    $solution = $solution1.'/'.$solution2;
+                    $results->push($solution);
                 }
             }
         }
+//        }
 
         if ($spaceCount < 3) {
             $results->push($text);
@@ -152,7 +154,7 @@ class SearchService
      * @param $nth
      * @return array
      */
-    private function split2($string, $needle, $nth)
+    private function split2(string $string, string $needle, int $nth)
     {
         $max = strlen($string);
         $n = 0;
@@ -172,9 +174,9 @@ class SearchService
 
     /**
      * @param $object
-     * @return Collection
+     * @return Collection<int, array{name: string,artist: array}>
      */
-    private function transformSolution($object)
+    private function transformSolution(string $object)
     {
         $results = collect();
 
@@ -198,7 +200,7 @@ class SearchService
             }
 
             return [
-                'name' => $name,
+                'name' => strval($name),
                 'artist' => $artist,
             ];
         });
