@@ -75,7 +75,7 @@ class SearchService
     }
 
     /**
-     * @param string $text
+     * @param  string  $text
      * @return mixed|null
      */
     public function search(string $text)
@@ -90,7 +90,7 @@ class SearchService
     }
 
     /**
-     * @param string $text
+     * @param  string  $text
      * @return Collection<0, string>
      */
     private function split(string $text)

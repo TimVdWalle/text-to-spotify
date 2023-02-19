@@ -26,8 +26,9 @@ class SpotifyService
     // search several markets until $term is found or until maximum tries have been reached
     // return result or null (if not found)
     /**
-     * @param string $term
+     * @param  string  $term
      * @return mixed|void
+     *
      * @throws \Aerni\Spotify\Exceptions\SpotifyApiException
      * @throws \Aerni\Spotify\Exceptions\ValidatorException
      */
@@ -79,7 +80,7 @@ class SpotifyService
         $session = new Session(
             strval(config('spotify.auth.client_id')),
             strval(config('spotify.auth.client_secret')),
-                strval(config('spotify.auth.redirect_url')),
+            strval(config('spotify.auth.redirect_url')),
         );
 
         $api = new SpotifyWebAPI();

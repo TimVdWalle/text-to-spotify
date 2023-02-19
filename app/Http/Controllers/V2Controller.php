@@ -25,7 +25,7 @@ class V2Controller extends Controller
     }
 
     /**
-     * @param Request $request
+     * @param  Request  $request
      * @return Application|Factory|View|RedirectResponse|Redirector
      */
     public function store(Request $request): View|Factory|Redirector|RedirectResponse|Application
@@ -52,7 +52,7 @@ class V2Controller extends Controller
     }
 
     /**
-     * @param Request $request
+     * @param  Request  $request
      * @return void
      */
     public function tokenstore(Request $request): void

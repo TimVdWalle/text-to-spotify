@@ -16,8 +16,9 @@ class V1Controller extends Controller
     }
 
     /**
-     * @param Request $request
+     * @param  Request  $request
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     *
      * @throws \Aerni\Spotify\Exceptions\SpotifyApiException
      * @throws \Aerni\Spotify\Exceptions\ValidatorException
      */
@@ -25,7 +26,7 @@ class V1Controller extends Controller
     {
         $text = strval($request->get('text'));
 
-        if (!$text) {
+        if (! $text) {
             return redirect(route('home'));
         }
 
@@ -38,7 +39,7 @@ class V1Controller extends Controller
             return redirect(route('home'));
         }
 
-        $spotify = new Spotify((array)config('spotify.default_config'));
+        $spotify = new Spotify((array) config('spotify.default_config'));
 
         $results = collect();
         foreach ($parts as $part) {
