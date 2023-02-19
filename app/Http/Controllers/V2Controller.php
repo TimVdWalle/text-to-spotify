@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Services\SearchService;
-use App\Services\TrackService;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -18,9 +17,6 @@ class V2Controller extends Controller
      */
     public function show(): View|Factory|Application
     {
-        $trackService = new TrackService();
-//        $trackService->test();
-
         return view('v2');
     }
 
@@ -30,8 +26,6 @@ class V2Controller extends Controller
      */
     public function store(Request $request): View|Factory|Redirector|RedirectResponse|Application
     {
-//        $searchService = new SearchService();
-
         $text = strval($request->get('text'));
 
         if (! $text) {
