@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\PlayListService;
 use App\Services\SearchService;
 use App\Services\SpotifyService;
 use Illuminate\Contracts\Foundation\Application;
@@ -46,13 +47,28 @@ class V3Controller extends Controller
         ]);
     }
 
+    /**
+     * @param Request $request
+     * @return void
+     */
     public function playliststore(Request $request){
         $text = strval($request->get('text'));
 
         $spotifyService = new SpotifyService();
+        if($spotifyService->hasToken()){
+            $playListService = new PlayListService();
+            $playListService->saveToPlaylist($text);
+        } else {
+            // save url to redirect to when coming back from spotify
+            $redirectToUrl = route('v3.playlist.store', ['text' => $text]);
+//            $request->session()->put('redirectTo', $redirectToUrl);
+            session(['redirectTo' => $redirectToUrl]);
+            $request->session()->save();
 
 
-
+//            dd('going to spotify');
+            $spotifyService->redirectToGetToken();
+        }
     }
 
     /**
@@ -63,6 +79,8 @@ class V3Controller extends Controller
     {
         if (isset($_GET['code'])) {
             $request->session()->put('spotify-token', $request->code);
-        }
+
+            $redirectTo = session('redirectTo');
+            header('Location: ' . $redirectTo);        }
     }
 }

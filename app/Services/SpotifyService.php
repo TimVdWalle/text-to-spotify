@@ -11,6 +11,7 @@ use SpotifyWebAPI\SpotifyWebAPI;
  *      Aerni\Spotify\Spotify : can talk to the spotify api without user tokens: just used to search for tracks
  *      SpotifyWebAPI : can talk to spotify api with user tokens: used for creating playlists for user
  */
+
 class SpotifyService
 {
     /**
@@ -26,7 +27,7 @@ class SpotifyService
     // search several markets until $term is found or until maximum tries have been reached
     // return result or null (if not found)
     /**
-     * @param  string  $term
+     * @param string $term
      * @return mixed|void
      *
      * @throws \Aerni\Spotify\Exceptions\SpotifyApiException
@@ -73,44 +74,59 @@ class SpotifyService
     }
 
     /**
-     * @return void
+     * @return bool
      */
-    public function checkToken()
+    public function hasToken()
     {
-        $session = $this->getSession();
-
-        $api = new SpotifyWebAPI();
         $token = session('spotify-token');
+        if (!$token) {
+            return false;
+        };
 
-        if ($token) {
-            $session->requestAccessToken(strval($token));
-            $api->setAccessToken($session->getAccessToken());
-
-//            print_r($api->me());
-        } else {
-            return null;
-        }
+        return true;
     }
 
     /**
      * @return void
      */
-    public function redirectToGetToken(){
+    public function getApi()
+    {
+        $session = $this->getSession();
+//        $api = new SpotifyWebAPI();
+//
+//        if ($token) {
+//            $session->requestAccessToken(strval($token));
+//            $api->setAccessToken($session->getAccessToken());
+//
+////            print_r($api->me());
+//        } else {
+//            return null;
+//        }
+    }
+
+    /**
+     * @return void
+     */
+    public function redirectToGetToken()
+    {
+        $session = $this->getSession();
         $options = [
             'scope' => [
                 'user-read-email',
             ],
         ];
 
-        header('Location: '.$session->getAuthorizeUrl($options));
-        exit();
+//        dd($session->getAuthorizeUrl($options));
 
+        header('Location: ' . $session->getAuthorizeUrl($options));
+        exit();
     }
 
     /**
      * @return Session
      */
-    private function getSession(){
+    private function getSession()
+    {
         $session = new Session(
             strval(config('spotify.auth.client_id')),
             strval(config('spotify.auth.client_secret')),
