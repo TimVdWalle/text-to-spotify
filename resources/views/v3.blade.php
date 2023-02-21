@@ -21,7 +21,7 @@
 
                 {{--                </h2>--}}
                 <p class="mt-1 text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl">Convert any text
-                    to spotify playlist.</p>
+                    to spotify playlist</p>
                 <p class="mx-auto mt-5 max-w-xl text-xl ">Type any text and convert it to a list of spotify
                     tracks.</p>
             </div>
