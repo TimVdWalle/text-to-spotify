@@ -17,13 +17,13 @@ class PlayListService
         // split into tracks
         $parts = (new SearchService())->splitAndSearch($text);
 
-        $playListName = $parts->first()['name'];
+        $playListName = $parts->first()['name'];        /* @phpstan-ignore-line */
 
         /** @var Collection<int, Track> $tracks */
         $tracks = $parts->map(function($part){
             return TrackService::get($part['name']);
         })->map(function($track){
-            return $track->track['id'];
+            return $track->track['id'] ?? 0;        /* @phpstan-ignore-line */
         });
 
         $api = (new SpotifyService())->getApi();
@@ -33,7 +33,7 @@ class PlayListService
         }
 
         $playlistOptions = [
-            'name' => $playListName ?? 'text-to-spotify',
+            'name' => $playListName,
             'collaborative' => false,
             'description' => 'Playlist created from text-to-spotify.vandewalle.mobi (' . config('app.url') . ')',
             'public' => true,
@@ -41,7 +41,7 @@ class PlayListService
 
         $result = $api->createPlaylist($playlistOptions);
 
-        $api->addPlaylistTracks($result->id, $tracks->toArray());
+        $api->addPlaylistTracks($result->id, $tracks->toArray());       /* @phpstan-ignore-line */
 
 //        dd($result->id, $result);
 

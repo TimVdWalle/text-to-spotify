@@ -79,7 +79,7 @@ class V3Controller extends Controller
     {
         if (isset($_GET['code'])) {
             $spotifyService = new SpotifyService();
-            $spotifyService->getAndStoreAccessToken($request->code);
+            $spotifyService->getAndStoreAccessToken(strval($request->code));
         }
     }
 }

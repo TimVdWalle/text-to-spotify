@@ -116,7 +116,7 @@ class SpotifyService
 
         if ($accesstoken) {
 //            $session->requestAccessToken(strval($accesstoken));
-            $api->setAccessToken($accesstoken);
+            $api->setAccessToken(strval($accesstoken));
 
             return $api;
         } else {
@@ -124,6 +124,10 @@ class SpotifyService
         }
     }
 
+    /**
+     * @param string $token
+     * @return void
+     */
     public function getAndStoreAccessToken(string $token){
         $session = $this->getSpotifySession();
         $api = new SpotifyWebAPI();
@@ -160,32 +164,6 @@ class SpotifyService
 
         header('Location: ' . $session->getAuthorizeUrl($options));
         exit();
-    }
-
-    /**
-     * @return void
-     */
-    public function test(){
-        $session = $this->getSpotifySession();
-
-        $api = new SpotifyWebAPI();
-
-        $token = self::getToken();
-        if (isset($_GET['code'])) {
-            $session->requestAccessToken($_GET['code']);
-            $api->setAccessToken($session->getAccessToken());
-
-            print_r($api->me());
-        } else {
-            $options = [
-                'scope' => [
-                    'user-read-email',
-                ],
-            ];
-
-            header('Location: ' . $session->getAuthorizeUrl($options));
-            die();
-        }
     }
 
     /**
