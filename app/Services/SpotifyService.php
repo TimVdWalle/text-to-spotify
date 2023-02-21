@@ -10,6 +10,7 @@ use SpotifyWebAPI\SpotifyWebAPI;
  * this service uses 2 libraries to talk to the spotify api
  *      Aerni\Spotify\Spotify : can talk to the spotify api without user tokens: just used to search for tracks
  *      SpotifyWebAPI : can talk to spotify api with user tokens: used for creating playlists for user
+ *          (jwilsson/spotify-web-api-php)
  */
 
 class SpotifyService
@@ -76,10 +77,12 @@ class SpotifyService
     /**
      * @return bool
      */
-    public function hasToken()
+    public function hasAccessToken()
     {
-        $token = session('spotify-token');
-        if (!$token) {
+        $token = session('spotify-access-token');
+        $lastActivity = session('last-activity');
+
+        if(!$token || !$lastActivity || (time() - $lastActivity > (60 *60))){
             return false;
         };
 
@@ -87,21 +90,58 @@ class SpotifyService
     }
 
     /**
-     * @return void
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Session\SessionManager|\Illuminate\Session\Store|mixed
      */
-    public function getApi()
+    public function getAccessToken()
     {
-        $session = $this->getSession();
-//        $api = new SpotifyWebAPI();
-//
-//        if ($token) {
-//            $session->requestAccessToken(strval($token));
-//            $api->setAccessToken($session->getAccessToken());
-//
-////            print_r($api->me());
-//        } else {
-//            return null;
-//        }
+        if(!$this->hasAccessToken()){
+            return null;
+        }
+
+        $token = session('spotify-access-token');
+        return $token;
+    }
+
+    /**
+     * @return SpotifyWebAPI|null
+     */
+    public function getApi(): ?SpotifyWebAPI
+    {
+        $session = $this->getSpotifySession();
+        $api = new SpotifyWebAPI();
+
+        $accesstoken = $this->getAccessToken();
+
+//        dd('$accesstoken', $accesstoken);
+
+        if ($accesstoken) {
+//            $session->requestAccessToken(strval($accesstoken));
+            $api->setAccessToken($accesstoken);
+
+            return $api;
+        } else {
+            return null;
+        }
+    }
+
+    public function getAndStoreAccessToken(string $token){
+        $session = $this->getSpotifySession();
+        $api = new SpotifyWebAPI();
+
+        $session->requestAccessToken(strval($token));
+        $accessToken = $session->getAccessToken();
+
+        $api->setAccessToken($accessToken);
+
+
+//        print_r($api->me());
+//        dd('done');
+
+        request()->session()->put('spotify-access-token', $accessToken);
+        request()->session()->put('last-activity', time());
+
+        $redirectTo = session('redirectTo');
+        header('Location: ' . $redirectTo);
     }
 
     /**
@@ -109,10 +149,10 @@ class SpotifyService
      */
     public function redirectToGetToken()
     {
-        $session = $this->getSession();
+        $session = $this->getSpotifySession();
         $options = [
             'scope' => [
-                'user-read-email',
+                'playlist-modify-public',
             ],
         ];
 
@@ -123,9 +163,35 @@ class SpotifyService
     }
 
     /**
+     * @return void
+     */
+    public function test(){
+        $session = $this->getSpotifySession();
+
+        $api = new SpotifyWebAPI();
+
+        $token = self::getToken();
+        if (isset($_GET['code'])) {
+            $session->requestAccessToken($_GET['code']);
+            $api->setAccessToken($session->getAccessToken());
+
+            print_r($api->me());
+        } else {
+            $options = [
+                'scope' => [
+                    'user-read-email',
+                ],
+            ];
+
+            header('Location: ' . $session->getAuthorizeUrl($options));
+            die();
+        }
+    }
+
+    /**
      * @return Session
      */
-    private function getSession()
+    private function getSpotifySession()
     {
         $session = new Session(
             strval(config('spotify.auth.client_id')),
@@ -135,4 +201,6 @@ class SpotifyService
 
         return $session;
     }
+
+
 }

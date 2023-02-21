@@ -55,7 +55,7 @@ class V3Controller extends Controller
         $text = strval($request->get('text'));
 
         $spotifyService = new SpotifyService();
-        if($spotifyService->hasToken()){
+        if($spotifyService->hasAccessToken()){
             $playListService = new PlayListService();
             $playListService->saveToPlaylist($text);
         } else {
@@ -78,9 +78,8 @@ class V3Controller extends Controller
     public function tokenstore(Request $request): void
     {
         if (isset($_GET['code'])) {
-            $request->session()->put('spotify-token', $request->code);
-
-            $redirectTo = session('redirectTo');
-            header('Location: ' . $redirectTo);        }
+            $spotifyService = new SpotifyService();
+            $spotifyService->getAndStoreAccessToken($request->code);
+        }
     }
 }
