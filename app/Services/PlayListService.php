@@ -3,8 +3,8 @@
 namespace App\Services;
 
 use App\Models\Track;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Collection;
+use SpotifyWebAPI\SpotifyWebAPI;
 
 class PlayListService
 {
@@ -17,6 +17,40 @@ class PlayListService
         // split into tracks
         $parts = (new SearchService())->splitAndSearch($text);
 
-        dd($parts);
+        $playListName = $parts->first()['name'];
+
+        /** @var Collection<int, Track> $tracks */
+        $tracks = $parts->map(function($part){
+            return TrackService::get($part['name']);
+        })->map(function($track){
+            return $track->track['id'];
+        });
+
+        $api = (new SpotifyService())->getApi();
+
+        if(!$api){
+            return;
+        }
+
+        $playlistOptions = [
+            'name' => $playListName ?? 'text-to-spotify',
+            'collaborative' => false,
+            'description' => 'Playlist created from text-to-spotify.vandewalle.mobi (' . config('app.url') . ')',
+            'public' => true,
+        ];
+
+        $result = $api->createPlaylist($playlistOptions);
+
+        $api->addPlaylistTracks($result->id, $tracks->toArray());
+
+//        dd($result->id, $result);
+
+//        array|object $options – Options for the new playlist.
+//        - string name Required. Name of the playlist.
+//        - bool collaborative Optional. Whether the playlist should be collaborative or not.
+//        - string description Optional. Description of the playlist.
+//        - bool public Optional. Whether the playlist should be public or not
+
+        echo('playlist created!');
     }
 }
