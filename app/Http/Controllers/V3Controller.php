@@ -48,14 +48,15 @@ class V3Controller extends Controller
     }
 
     /**
-     * @param Request $request
+     * @param  Request  $request
      * @return void
      */
-    public function playliststore(Request $request){
+    public function playliststore(Request $request)
+    {
         $text = strval($request->get('text'));
 
         $spotifyService = new SpotifyService();
-        if($spotifyService->hasAccessToken()){
+        if ($spotifyService->hasAccessToken()) {
             $playListService = new PlayListService();
             $playListService->saveToPlaylist($text);
         } else {
@@ -64,7 +65,6 @@ class V3Controller extends Controller
 //            $request->session()->put('redirectTo', $redirectToUrl);
             session(['redirectTo' => $redirectToUrl]);
             $request->session()->save();
-
 
 //            dd('going to spotify');
             $spotifyService->redirectToGetToken();

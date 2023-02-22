@@ -4,38 +4,37 @@ namespace App\Services;
 
 use App\Models\Track;
 use Illuminate\Support\Collection;
-use SpotifyWebAPI\SpotifyWebAPI;
 
 class PlayListService
 {
-
     /**
-     * @param string $text
+     * @param  string  $text
      * @return void
      */
-    public function saveToPlaylist(string $text){
+    public function saveToPlaylist(string $text)
+    {
         // split into tracks
         $parts = (new SearchService())->splitAndSearch($text);
 
         $playListName = $parts->first()['name'];        /* @phpstan-ignore-line */
 
         /** @var Collection<int, Track> $tracks */
-        $tracks = $parts->map(function($part){
+        $tracks = $parts->map(function ($part) {
             return TrackService::get($part['name']);
-        })->map(function($track){
+        })->map(function ($track) {
             return $track->track['id'] ?? 0;        /* @phpstan-ignore-line */
         });
 
         $api = (new SpotifyService())->getApi();
 
-        if(!$api){
+        if (! $api) {
             return;
         }
 
         $playlistOptions = [
             'name' => $playListName,
             'collaborative' => false,
-            'description' => 'Playlist created from text-to-spotify.vandewalle.mobi (' . config('app.url') . ')',
+            'description' => 'Playlist created from text-to-spotify.vandewalle.mobi ('.config('app.url').')',
             'public' => true,
         ];
 
@@ -51,6 +50,6 @@ class PlayListService
 //        - string description Optional. Description of the playlist.
 //        - bool public Optional. Whether the playlist should be public or not
 
-        echo('playlist created!');
+        echo 'playlist created!';
     }
 }

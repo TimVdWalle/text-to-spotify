@@ -3,8 +3,6 @@
 namespace App\Services;
 
 use App\Models\Track;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Model;
 
 class TrackService
 {
@@ -16,9 +14,8 @@ class TrackService
         dd('test');
     }
 
-
     /**
-     * @param string $part
+     * @param  string  $part
      * @return ?Track
      */
     public static function get(string $part)
@@ -32,12 +29,12 @@ class TrackService
     }
 
     /**
-     * @param Track $track
+     * @param  Track  $track
      * @return bool
      */
     public static function isValid(Track $track): bool
     {
-        $isValid =  $track !== null && $track->track !== null && !empty($track->track);
+        $isValid = $track !== null && $track->track !== null && ! empty($track->track);
 
 //        if($track->track_name == 'is kevin'){
 //            dd($track, $isValid);
@@ -47,14 +44,15 @@ class TrackService
     }
 
     /**
-     * @param string $part
-     * @param object $searchResult
+     * @param  string  $part
+     * @param  object  $searchResult
      * @return Track
      */
-    public static function store(string $part, object $searchResult){
+    public static function store(string $part, object $searchResult)
+    {
         $existingTrack = self::get($part);
 
-        if($existingTrack){
+        if ($existingTrack) {
             $existingTrack->track = $searchResult;
             $existingTrack->save();
 

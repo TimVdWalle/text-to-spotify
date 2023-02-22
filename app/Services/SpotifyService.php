@@ -5,7 +5,6 @@ namespace App\Services;
 use Aerni\Spotify\Spotify;
 use SpotifyWebAPI\Session;
 use SpotifyWebAPI\SpotifyWebAPI;
-use Illuminate\Support\Collection;
 
 /*
  * this service uses 2 libraries to talk to the spotify api
@@ -26,11 +25,10 @@ class SpotifyService
      */
     protected int $limitPerTry = 50;
 
-
-
     /**
-     * @param string $term
+     * @param  string  $term
      * @return mixed|void
+     *
      * @throws \Aerni\Spotify\Exceptions\SpotifyApiException
      * @throws \Aerni\Spotify\Exceptions\ValidatorException
      * search several markets until $term is found or until maximum tries have been reached
@@ -90,9 +88,9 @@ class SpotifyService
         $token = session('spotify-access-token');
         $lastActivity = session('last-activity');
 
-        if(!$token || !$lastActivity || (time() - $lastActivity > (60 *60))){
+        if (! $token || ! $lastActivity || (time() - $lastActivity > (60 * 60))) {
             return false;
-        };
+        }
 
         return true;
     }
@@ -102,11 +100,12 @@ class SpotifyService
      */
     public function getAccessToken()
     {
-        if(!$this->hasAccessToken()){
+        if (! $this->hasAccessToken()) {
             return null;
         }
 
         $token = session('spotify-access-token');
+
         return $token;
     }
 
@@ -133,10 +132,11 @@ class SpotifyService
     }
 
     /**
-     * @param string $token
+     * @param  string  $token
      * @return void
      */
-    public function getAndStoreAccessToken(string $token){
+    public function getAndStoreAccessToken(string $token)
+    {
         $session = $this->getSpotifySession();
         $api = new SpotifyWebAPI();
 
@@ -145,7 +145,6 @@ class SpotifyService
 
         $api->setAccessToken($accessToken);
 
-
 //        print_r($api->me());
 //        dd('done');
 
@@ -153,7 +152,7 @@ class SpotifyService
         request()->session()->put('last-activity', time());
 
         $redirectTo = session('redirectTo');
-        header('Location: ' . $redirectTo);
+        header('Location: '.$redirectTo);
     }
 
     /**
@@ -170,7 +169,7 @@ class SpotifyService
 
 //        dd($session->getAuthorizeUrl($options));
 
-        header('Location: ' . $session->getAuthorizeUrl($options));
+        header('Location: '.$session->getAuthorizeUrl($options));
         exit();
     }
 
@@ -187,6 +186,4 @@ class SpotifyService
 
         return $session;
     }
-
-
 }

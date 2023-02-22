@@ -43,16 +43,16 @@ class SearchService
                 $cachedResult = TrackService::get($part);
 
                 if ($cachedResult) {
-                    if (!TrackService::isValid($cachedResult)) {
+                    if (! TrackService::isValid($cachedResult)) {
 //                        break;
                         $allValid = false;
                     }
                 } else {
                     $searchResult = $this->search($part);
                     if ($searchResult) {
-                        TrackService::store($part, (object)$searchResult);
+                        TrackService::store($part, (object) $searchResult);
                     } else {
-                        TrackService::store($part, (object)null);
+                        TrackService::store($part, (object) null);
                         $allValid = false;
                     }
                 }
@@ -86,7 +86,7 @@ class SearchService
             }
         }
 
-        if (!isset($solutionCandidate)) {
+        if (! isset($solutionCandidate)) {
             return collect();
         }
 
@@ -96,7 +96,7 @@ class SearchService
     }
 
     /**
-     * @param string $text
+     * @param  string  $text
      * @return mixed|null
      */
     public function search(string $text)
@@ -111,7 +111,7 @@ class SearchService
     }
 
     /**
-     * @param string $text
+     * @param  string  $text
      * @return Collection<int, string>
      */
     private function split(string $text)
@@ -151,7 +151,7 @@ class SearchService
 
             foreach ($solutions1 as $solution1) {
                 foreach ($solutions2 as $solution2) {
-                    $solution = $solution1 . '/' . $solution2;
+                    $solution = $solution1.'/'.$solution2;
                     $results->push($solution);
                 }
             }
@@ -206,7 +206,6 @@ class SearchService
                 $results->push($track);
             }
 
-
 //            if ($this->cachedResults->contains('id', $part)) {
 //                $cachedResult = $this->cachedResults->where('id', $part)->first();
 //                $results->push($cachedResult);
@@ -218,9 +217,8 @@ class SearchService
         $list = $results->map(function ($item) {
 //            dd();
 
-
             /** @var Track $item */
-            if ($item->track && isset($item->track['artists'])){        /* @phpstan-ignore-line */
+            if ($item->track && isset($item->track['artists'])) {        /* @phpstan-ignore-line */
                 $name = $item->track_name;
                 $artist = array_map(function ($artistArray) {
                     return $artistArray['name'];
@@ -229,7 +227,6 @@ class SearchService
                 $artist = [''];
                 $name = '';
             }
-
 
 //            if (isset($item['object'])) {
 //                $artist = array_map(function ($artistArray) {
