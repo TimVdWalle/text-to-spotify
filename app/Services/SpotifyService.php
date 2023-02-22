@@ -5,6 +5,7 @@ namespace App\Services;
 use Aerni\Spotify\Spotify;
 use SpotifyWebAPI\Session;
 use SpotifyWebAPI\SpotifyWebAPI;
+use Illuminate\Support\Collection;
 
 /*
  * this service uses 2 libraries to talk to the spotify api
@@ -25,17 +26,20 @@ class SpotifyService
      */
     protected int $limitPerTry = 50;
 
-    // search several markets until $term is found or until maximum tries have been reached
-    // return result or null (if not found)
+
+
     /**
      * @param string $term
      * @return mixed|void
-     *
      * @throws \Aerni\Spotify\Exceptions\SpotifyApiException
      * @throws \Aerni\Spotify\Exceptions\ValidatorException
+     * search several markets until $term is found or until maximum tries have been reached
+     * return result or null (if not found)
      */
     public function search(string $term)
     {
+//        $foundResults = collect();
+
         $markets = [
             'BE',
             'US',
@@ -60,6 +64,7 @@ class SpotifyService
                     ->searchTracks($term)
                     ->limit($this->limitPerTry)
                     ->offset($this->limitPerTry * $try)
+
                     ->get();
 
                 // check if the searchresults containt the term that was searched for ...
@@ -67,11 +72,14 @@ class SpotifyService
                     foreach ($searchResults['tracks']['items'] as $searchResult) {
                         if (strtolower($searchResult['name']) == strtolower($term)) {
                             return $searchResult;
+//                            $foundResults->push($searchResult);
                         }
                     }
                 }
             }
         }
+
+//        return $foundResults;
     }
 
     /**
