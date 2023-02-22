@@ -13,6 +13,6 @@ class HomeController extends Controller
      */
     public function home()
     {
-        return redirect(route('v3.show'));
+        return redirect(route('v4.show'));
     }
 }

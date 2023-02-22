@@ -42,3 +42,15 @@ Route::get('/v3/token/store', [\App\Http\Controllers\V3Controller::class, 'token
 
 Route::get('/v3/playlist/store', [\App\Http\Controllers\V3Controller::class, 'playliststore'])
     ->name('v3.playlist.store');
+
+Route::get('/v4', [\App\Http\Controllers\V4Controller::class, 'show'])
+    ->name('v4.show');
+
+Route::post('/v4', [\App\Http\Controllers\V4Controller::class, 'store'])
+    ->name('v4.store');
+
+Route::get('/v4/token/store', [\App\Http\Controllers\V4Controller::class, 'tokenstore'])
+    ->name('v4.token.store');
+
+Route::get('/v4/playlist/store', [\App\Http\Controllers\V4Controller::class, 'playliststore'])
+    ->name('v4.playlist.store');
