@@ -69,6 +69,8 @@ class SpotifyService
                 if (isset($searchResults['tracks']) && isset($searchResults['tracks']['items'])) {
                     foreach ($searchResults['tracks']['items'] as $searchResult) {
                         if (strtolower($searchResult['name']) == strtolower($term)) {
+//                            dd($searchResult);
+
                             return $searchResult;
 //                            $foundResults->push($searchResult);
                         }
