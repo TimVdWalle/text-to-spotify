@@ -59,9 +59,10 @@
     <script src="js/hyphenator.js"></script>
 {{--    <script src="jwplayer/jwplayer.js"></script>--}}
     <script src="js/scripts.js"></script>
-    <script src="//maps.google.com/maps/api/js?sensor=false"></script>
+{{--    <script src="//maps.google.com/maps/api/js?sensor=false"></script>--}}
 
     <script src="js/modernizr.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     @vite('resources/js/app.js')
 
 </head>
@@ -71,10 +72,13 @@
 
         <!-- ########################### HEADER ########################### -->
         <header id="header" class="group">
-            <h1 id="logo" class="four columns">
+            <h1 id="logo" class="sixteen columns">
                 <a href="/">
 {{--                    <img src="images/logo.png" alt="" />--}}
-                    <i class="fa-solid fa-music"></i>
+                    <span>
+                        <i class="fa-solid fa-music fa-fw"></i>
+                        @yield('pageTitle')
+                    </span>
                 </a></h1>
             <nav id="nav" class="nav twelve columns">
                 <ul id="navigation" class="sf-menu">
