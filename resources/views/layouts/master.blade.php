@@ -64,6 +64,7 @@
     <script src="js/modernizr.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     @vite('resources/js/app.js')
+    @vite('resources/css/app.css')
 
 </head>
 
@@ -131,13 +132,13 @@
 
         <h3 class="section-title">@yield('title')</h3>
 
-        <div class="row">
-            <div class="sixteen columns">
+{{--        <div class="row">--}}
+{{--            <div class="sixteen columns">--}}
 
                 @yield('content')
 
-            </div><!-- /sixteen columns -->
-        </div><!-- /row -->
+{{--            </div><!-- /sixteen columns -->--}}
+{{--        </div><!-- /row -->--}}
 
     </div><!-- /container -->
 
