@@ -1,12 +1,12 @@
-@tailwind base;
+/*@tailwind base;*/
 
-@layer base {
-    html {
-        @apply text-green-900;
-    }
-}
+/*@layer base {*/
+/*    html {*/
+/*        @apply text-green-900;*/
+/*    }*/
+/*}*/
 
 
 
-@tailwind components;
+/*@tailwind components;*/
 @tailwind utilities;
