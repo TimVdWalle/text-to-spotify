@@ -5,15 +5,15 @@
 
 @section('content')
 
-    <div class="sixteen columns">
-        <div class="six columns offset-by-four">
+    <div class="sixteen columns fp-3">
+{{--        <div class="sixteen columns foffset-by-four">--}}
             <textarea frows="4" name="text" id="text"
                       rows="6"
                       cols="6"
-                      class="p-2 w-full">{{$text ?? ''}}</textarea>
-        </div>
+                      class="p-0 w-full">{{$text ?? ''}}</textarea>
+{{--        </div>--}}
     </div>
-<hr>
+
     <div class="row">
         <div class="sixteen columns">
 
