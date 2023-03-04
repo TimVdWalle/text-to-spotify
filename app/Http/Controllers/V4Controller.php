@@ -42,11 +42,11 @@ class V4Controller extends Controller
         }
 
         $searchService = new SearchServiceV4();
-        $list = $searchService->splitAndSearch($text);
+        $tracks = $searchService->splitAndSearch($text);
 
         return view(self::VERSION, [
             'text' => $text,
-            'results' => $list,
+            'tracks' => $tracks
         ]);
     }
 
