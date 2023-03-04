@@ -17,15 +17,19 @@ button.btn-custom {
     text-decoration: none;
     outline: 0;
     box-sizing: border-box;
-    height: 25px;
+    /*height: 25px;*/
     min-width: 80px;
     display: inline-flex;
     justify-content: center;
     align-items: center;
-    color: white;
-    background: url(../../public/css/images/bg_btn.png) repeat-x 0 -75px;
-
-    line-height: 1;
+    color: #fff;
+    /* background: url(/build/assets/bg_btn-118ac70f.png) repeat-x 0 -91px; */
+    line-height: 2;
+    font-size: 1.5rem;
+    height: 44px;
+    /* border: 1px solid grey; */
+    /* border-radius: 9px; */
+    background-color: #b50e65;
 
 }
 
