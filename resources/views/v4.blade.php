@@ -10,7 +10,7 @@
             <textarea frows="4" name="text" id="text"
                       rows="6"
                       cols="6"
-                      class="p-0 w-full">{{$text ?? ''}}</textarea>
+                      class="p-2 w-full box-border">{{$text ?? ''}}</textarea>
 {{--        </div>--}}
     </div>
 
