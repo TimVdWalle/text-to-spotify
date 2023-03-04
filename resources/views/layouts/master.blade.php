@@ -148,7 +148,7 @@
 
             <footer id="footer" class="sixteen columns">
                 <div class="twelve columns offset-by-four">
-                    © {{now()->year}} text-to-spotify | All rights reserved | This site uses Spotify API <i class="fa-brands fa-spotify" style="color: #1DB954;"></i>
+                    © {{now()->year}} text2playlist | All rights reserved | This site uses Spotify API <i class="fa-brands fa-spotify" style="color: #1DB954;"></i>
                 </div>
             </footer><!-- /footer -->
 

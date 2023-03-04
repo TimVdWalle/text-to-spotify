@@ -34,7 +34,7 @@ class PlayListService
         $playlistOptions = [
             'name' => $playListName,
             'collaborative' => false,
-            'description' => 'Playlist created from text-to-spotify.vandewalle.mobi ('.config('app.url').')',
+            'description' => 'Playlist created from text2spotify.vandewalle.mobi ('.config('app.url').')',
             'public' => true,
         ];
 
