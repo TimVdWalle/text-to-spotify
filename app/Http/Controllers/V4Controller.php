@@ -22,7 +22,7 @@ class V4Controller extends Controller
      */
     public function show(): View|Factory|Application
     {
-        return view(self::VERSION);
+        return view(self::VERSION . '.show');
     }
 
     /**
@@ -44,15 +44,16 @@ class V4Controller extends Controller
         $searchService = new SearchServiceV4();
         $tracks = $searchService->splitAndSearch($text);
 
-        return view(self::VERSION, [
+        return view(self::VERSION . '.show', [
             'text' => $text,
             'tracks' => $tracks
         ]);
     }
 
+
     /**
-     * @param  Request  $request
-     * @return void
+     * @param Request $request
+     * @return Application|Factory|View|\Illuminate\Foundation\Application|void
      */
     public function playliststore(Request $request)
     {
@@ -61,10 +62,12 @@ class V4Controller extends Controller
         $spotifyService = new SpotifyService();
         if ($spotifyService->hasAccessToken()) {
             $playListService = new PlayListService();
-            $playListService->saveToPlaylist($text);
+            $success = $playListService->saveToPlaylist($text);
+
+            return view(self::VERSION . '.success', ['success' => boolval($success)]);
         } else {
             // save url to redirect to when coming back from spotify
-            $redirectToUrl = route(self::VERSION.'playlist.store', ['text' => $text]);
+            $redirectToUrl = route(self::VERSION.'.playlist.store', ['text' => $text]);
 //            $request->session()->put('redirectTo', $redirectToUrl);
             session(['redirectTo' => $redirectToUrl]);
             $request->session()->save();

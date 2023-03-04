@@ -61,3 +61,6 @@ Route::get('/v4/token/store', [\App\Http\Controllers\V4Controller::class, 'token
 
 Route::get('/v4/playlist/store', [\App\Http\Controllers\V4Controller::class, 'playliststore'])
     ->name('v4.playlist.store');
+
+//Route::get('/v4/playlist/stored', [\App\Http\Controllers\V4Controller::class, 'playliststore'])
+//    ->name('v4.playlist.stored');

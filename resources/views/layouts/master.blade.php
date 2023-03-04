@@ -35,11 +35,11 @@
     <!-- CSS
   ================================================== -->
     <link href='//fonts.googleapis.com/css?family=Lato:400,900,400italic' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" href="css/skeleton.css">
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/mediaqueries.css">
-    <link rel="stylesheet" href="css/flexslider.css">
-    <link rel="stylesheet" href="css/colors/purple.css">
+    <link rel="stylesheet" href="/css/skeleton.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/mediaqueries.css">
+    <link rel="stylesheet" href="/css/flexslider.css">
+    <link rel="stylesheet" href="/css/colors/purple.css">
 
     <!-- Favicons
     ================================================== -->

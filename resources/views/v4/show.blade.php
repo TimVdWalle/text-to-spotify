@@ -4,6 +4,20 @@
 @section('title', 'Convert text to spotify playlist')
 
 @section('content')
+    @if(isset($success) && $success)
+        <div class="row">
+            <div class="sixteen columns">
+
+                <article class="post album group">
+
+                    <div class="twelve columns omega">
+
+                        <h3>Playlist created!</h3>
+                    </div>
+                </article>
+            </div>
+        </div>
+    @endif
 
     @if(!isset($tracks))
         <div class="sixteen columns fp-3 ">
@@ -45,7 +59,7 @@
         <form action="/v4/playlist/store">
             <input type="hidden" value="{{$text}}" name="text">
 
-            <div class="mx-auto max-w-7xl py-8 px-6 sm:py-8 lg:px-8">
+            <div class="mx-auto max-w-7xl py-2 px-6 sm:py-2 lg:px-8">
                 <div class="text-center">
                     <button type="submit"
                             class="btn-custom">

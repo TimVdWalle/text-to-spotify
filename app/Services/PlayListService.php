@@ -9,7 +9,7 @@ class PlayListService
 {
     /**
      * @param  string  $text
-     * @return void
+     * @return bool
      */
     public function saveToPlaylist(string $text)
     {
@@ -28,7 +28,7 @@ class PlayListService
         $api = (new SpotifyService())->getApi();
 
         if (! $api) {
-            return;
+            return false;
         }
 
         $playlistOptions = [
@@ -50,6 +50,6 @@ class PlayListService
 //        - string description Optional. Description of the playlist.
 //        - bool public Optional. Whether the playlist should be public or not
 
-        echo 'playlist created!';
+        return true;
     }
 }
