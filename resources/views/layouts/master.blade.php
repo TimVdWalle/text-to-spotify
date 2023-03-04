@@ -43,25 +43,24 @@
 
     <!-- Favicons
     ================================================== -->
-    <link rel="shortcut icon" href="images/favicon.ico">
-    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
-    <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
-    <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+    <link rel="shortcut icon" href="{{ asset('favicon.ico') }}">
+    <link rel="apple-touch-icon" href="{{ asset('apple-touch-icon.png') }}">
+    <link rel="shortcut icon" href="{{ asset('favicon.ico') }}"  type='image/x-icon'>
 
     <!-- Javascript
   ================================================== -->
-    <script src="js/jquery-1.8.2.min.js"></script>
-    <script src="js/superfish.js"></script>
-    <script src="js/jquery.flexslider-min.js"></script>
-    <script src="js/jquery.fitvids.js"></script>
-    <script src="js/jquery.equalHeights.js"></script>
-    <script src="js/jquery.prettyPhoto.js"></script>
-    <script src="js/hyphenator.js"></script>
+    <script src="/js/jquery-1.8.2.min.js"></script>
+    <script src="/js/superfish.js"></script>
+    <script src="/js/jquery.flexslider-min.js"></script>
+    <script src="/js/jquery.fitvids.js"></script>
+    <script src="/js/jquery.equalHeights.js"></script>
+    <script src="/js/jquery.prettyPhoto.js"></script>
+    <script src="/js/hyphenator.js"></script>
 {{--    <script src="jwplayer/jwplayer.js"></script>--}}
-    <script src="js/scripts.js"></script>
+    <script src="/js/scripts.js"></script>
 {{--    <script src="//maps.google.com/maps/api/js?sensor=false"></script>--}}
 
-    <script src="js/modernizr.js"></script>
+    <script src="/js/modernizr.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     @vite('resources/js/app.js')
     @vite('resources/css/app.css')
