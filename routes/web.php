@@ -13,8 +13,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [\App\Http\Controllers\HomeController::class, 'home'])
+Route::get('/', [\App\Http\Controllers\PageController::class, 'home'])
     ->name('home');
+
+Route::get('/about', [\App\Http\Controllers\PageController::class, 'about'])
+    ->name('about');
+
+
+
+
 
 Route::get('/v1/', [\App\Http\Controllers\V1Controller::class, 'show'])
     ->name('v1.show');

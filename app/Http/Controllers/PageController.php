@@ -6,7 +6,7 @@ use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Routing\Redirector;
 
-class HomeController extends Controller
+class PageController extends Controller
 {
     /**
      * @return Application|RedirectResponse|Redirector
@@ -14,5 +14,12 @@ class HomeController extends Controller
     public function home()
     {
         return redirect(route('v4.show'));
+    }
+
+    /**
+     * @return Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
+    public function about(){
+        return view('about');
     }
 }
