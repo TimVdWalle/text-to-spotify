@@ -5,7 +5,6 @@
 
 @section('content')
 
-
     <div class="row">
         <div class="sixteen columns">
             <p>Welcome to Text2Playlist, the ultimate tool for turning your favorite pieces of text into personalized Spotify playlists!</p>
