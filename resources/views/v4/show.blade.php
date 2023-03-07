@@ -42,7 +42,7 @@
 
                     <div class="twelve columns omega">
 
-                        <h3>Playlist</h3>
+                        <h3>Tracks</h3>
 
                         @include('partials.tracklist')
 
