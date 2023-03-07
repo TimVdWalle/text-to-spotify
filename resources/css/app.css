@@ -43,3 +43,7 @@ button.btn-custom {
     font-weight: 400;
     color: #bebebe;
 }
+
+html {
+    overflow-y: scroll;
+}
